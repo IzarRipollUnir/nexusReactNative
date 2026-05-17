@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, Image, Pressable, ScrollView, Text, View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Navbar from '../../../shared/components/Navbar';
@@ -14,37 +15,26 @@ export default function LibraryHistoricScreen({ navigation }: any) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let mounted = true;
+  const loadHistoric = useCallback(async () => {
+    try {
+      setError(null);
 
-    (async () => {
-      try {
-        setError(null);
-        if (!user?.id) {
-          if (mounted) {
-            setBooks([]);
-          }
-          return;
-        }
-        const data = await getHistoric(user.id);
-        if (mounted) {
-          setBooks(data);
-        }
-      } catch (fetchError) {
-        if (mounted) {
-          setError(fetchError instanceof Error ? fetchError.message : 'No se pudo cargar el histórico');
-        }
-      } finally {
-        if (mounted) {
-          setLoading(false);
-        }
-      }
-    })();
-
-    return () => {
-      mounted = false;
-    };
+      // always use user id '1' for historic
+      setLoading(true);
+      const data = await getHistoric('1');
+      setBooks(data);
+    } catch (fetchError) {
+      setError(fetchError instanceof Error ? fetchError.message : 'No se pudo cargar el histórico');
+    } finally {
+      setLoading(false);
+    }
   }, [user?.id]);
+
+  useFocusEffect(
+    useCallback(() => {
+      void loadHistoric();
+    }, [loadHistoric])
+  );
 
   return (
     <>
@@ -53,15 +43,7 @@ export default function LibraryHistoricScreen({ navigation }: any) {
         <ScrollView className="flex-1 px-4 pt-4" contentContainerClassName="pb-10">
         <LibraryHeader title="Histórico" navigation={navigation} />
 
-          {!user?.id ? (
-            <View className="items-center rounded-3xl bg-slate-50 px-5 py-14">
-              <MaterialCommunityIcons name="history" size={56} color="#94a3b8" />
-              <Text className="mt-4 text-xl font-semibold text-slate-950">Inicia sesión para ver tu histórico</Text>
-              <Text className="mt-2 text-center text-base leading-6 text-slate-500">
-                Aquí aparecerán los libros que hayas comprado con tu cuenta.
-              </Text>
-            </View>
-          ) : loading ? (
+          {loading ? (
             <View className="items-center justify-center py-10">
               <ActivityIndicator />
             </View>

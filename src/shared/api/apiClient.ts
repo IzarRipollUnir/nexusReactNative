@@ -17,7 +17,10 @@ async function request(path: string, options: RequestInit = {}) {
 
   if (!BASE_URL) throw new Error('API base URL no configurada. Establece EXPO_PUBLIC_API_URL o expo.extra.API_URL');
 
-  const res = await fetch(`${BASE_URL}${path}`, { ...options, headers });
+  const url = `${BASE_URL}${path}`;
+
+  const res = await fetch(url, { ...options, headers });
+
   if (!res.ok) {
     const text = await res.text();
     throw new Error(text || res.statusText);
