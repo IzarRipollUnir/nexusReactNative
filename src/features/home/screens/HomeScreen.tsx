@@ -65,10 +65,6 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
     <SafeAreaView className="flex-1 bg-white" edges={["top"]}>
       <ScrollView className="flex-1 bg-white" contentContainerClassName="flex-grow px-4 pb-10 pt-4">
         <View className="overflow-hidden rounded-3xl px-6 py-16" style={{ backgroundColor: '#667eea' }}>
-          <View className="absolute -right-10 top-6 h-36 w-36 rounded-full bg-white/10" />
-          <View className="absolute -left-12 bottom-0 h-44 w-44 rounded-full bg-white/8" />
-          <View className="absolute right-8 top-12 h-3 w-3 rounded-full bg-white/30" />
-          <View className="absolute left-10 top-24 h-2 w-2 rounded-full bg-white/25" />
 
           <Text className="text-center text-5xl font-bold leading-tight text-white">
             Bienvenido a NEXUS

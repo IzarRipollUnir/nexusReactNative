@@ -2,19 +2,21 @@ import { apiClient } from '../../../shared/api/apiClient';
 import { Book, BookFilters, Category } from '../types';
 
 function normalizeBook(book: Book): Book {
+  const cover = book.cover?.trim();
+
   return {
     ...book,
-    cover: book.cover.replace('ssl=1g', 'ssl=1'),
+    cover: cover ? cover.replace('ssl=1g', 'ssl=1') : '',
   };
 }
 
 export async function getBooks(): Promise<Book[]> {
-  const books = await apiClient.get<Book[]>('/books');
+  const books = (await apiClient.get('/books')) as Book[];
   return books.map(normalizeBook);
 }
 
 export async function getBestSellers(): Promise<Book[]> {
-  const books = await apiClient.get<Book[]>('/books/top');
+  const books = (await apiClient.get('/books/top')) as Book[];
   return books.map(normalizeBook);
 }
 
@@ -23,12 +25,12 @@ export async function getCategories(): Promise<Category[]> {
 }
 
 export async function getBookByCategory(id: string): Promise<Book[]> {
-  const books = await apiClient.get<Book[]>(`/categories/${id}/books`);
+  const books = (await apiClient.get(`/categories/${id}/books`)) as Book[];
   return books.map(normalizeBook);
 }
 
 export async function getBookDetail(id: string): Promise<Book> {
-  const book = await apiClient.get<Book>(`/books/${id}`);
+  const book = (await apiClient.get(`/books/${id}`)) as Book;
   return normalizeBook(book);
 }
 
@@ -43,12 +45,12 @@ export async function getBooksWithFilters(filters?: BookFilters): Promise<Book[]
   if (filters?.ISBN) params.append('ISBN', filters.ISBN);
 
   const queryString = params.toString();
-  const books = await apiClient.get<Book[]>(`/books${queryString ? `?${queryString}` : ''}`);
+  const books = (await apiClient.get(`/books${queryString ? `?${queryString}` : ''}`)) as Book[];
   return books.map(normalizeBook);
 }
 
 export async function getHistoric(userId: string): Promise<Book[]> {
-  const books = await apiClient.get<Book[]>(`/users/${userId}/purchase`);
+  const books = (await apiClient.get(`/users/${userId}/purchase`)) as Book[];
   return books.map(normalizeBook);
 }
 
