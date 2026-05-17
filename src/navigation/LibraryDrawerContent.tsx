@@ -33,30 +33,6 @@ export default function LibraryDrawerContent(props: DrawerContentComponentProps)
   return (
     <DrawerContentScrollView {...props}>
       <View className="px-4 py-2">
-        <Text className="mb-3 text-lg font-semibold text-slate-950">Librería</Text>
-        <View className="mb-4 gap-2">
-          <Pressable
-            onPress={() => props.navigation.navigate('LibraryHome')}
-            className="flex-row items-center rounded-xl bg-slate-950 px-4 py-3 active:opacity-80"
-          >
-            <MaterialCommunityIcons name="home-outline" size={20} color="white" />
-            <Text className="ml-3 text-base font-medium text-white">Inicio</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => props.navigation.navigate('Cart')}
-            className="flex-row items-center rounded-xl bg-slate-100 px-4 py-3 active:opacity-80"
-          >
-            <MaterialCommunityIcons name="cart-outline" size={20} color="#0f172a" />
-            <Text className="ml-3 text-base font-medium text-slate-950">Carrito</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => props.navigation.navigate('Historic')}
-            className="flex-row items-center rounded-xl bg-slate-100 px-4 py-3 active:opacity-80"
-          >
-            <MaterialCommunityIcons name="history" size={20} color="#0f172a" />
-            <Text className="ml-3 text-base font-medium text-slate-950">Histórico</Text>
-          </Pressable>
-        </View>
 
         <Text className="mb-3 text-lg font-semibold text-slate-950">Categorías</Text>
         {loading ? (

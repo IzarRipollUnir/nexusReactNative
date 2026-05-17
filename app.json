@@ -25,6 +25,9 @@
     },
     "extra": {
       "API_URL": "https://mock.apidog.com/m1/1131845-1123817-default"
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

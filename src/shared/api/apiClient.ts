@@ -1,7 +1,7 @@
 import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const BASE_URL = process.env.EXPO_PUBLIC_API_URL; 
+const BASE_URL = process.env.EXPO_PUBLIC_API_URL || Constants.expoConfig?.extra?.API_URL || '';
 
 async function getToken() {
   return await AsyncStorage.getItem('token');
@@ -15,7 +15,12 @@ async function request(path: string, options: RequestInit = {}) {
   };
   if (token) headers['Authorization'] = `Bearer ${token}`;
 
-  const res = await fetch(`${BASE_URL}${path}`, { ...options, headers });
+  if (!BASE_URL) throw new Error('API base URL no configurada. Establece EXPO_PUBLIC_API_URL o expo.extra.API_URL');
+
+  const url = `${BASE_URL}${path}`;
+
+  const res = await fetch(url, { ...options, headers });
+
   if (!res.ok) {
     const text = await res.text();
     throw new Error(text || res.statusText);
