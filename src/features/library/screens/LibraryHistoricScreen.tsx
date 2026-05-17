@@ -19,7 +19,6 @@ export default function LibraryHistoricScreen({ navigation }: any) {
     try {
       setError(null);
 
-      // always use user id '1' for historic
       setLoading(true);
       const data = await getHistoric('1');
       setBooks(data);

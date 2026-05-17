@@ -32,16 +32,13 @@ export default function Navbar({ navigation }: NavbarProps) {
   return (
     <SafeAreaView className="bg-blue-600" edges={['top']}>
       <View className="flex-row items-center justify-between px-4 py-4">
-        {/* Logo */}
         <Pressable onPress={() => navigation?.navigate('Main')}>
           <Text className="text-2xl font-bold text-white">NEXUS</Text>
         </Pressable>
 
-        {/* Navigation Items */}
         <View className="flex-row items-center gap-4">
           {user ? (
             <>
-              {/* Library Button */}
               <Pressable
                 onPress={() => navigation?.navigate('Library')}
                 className="flex-row items-center gap-1 rounded-full px-3 py-2 active:opacity-80"
@@ -50,7 +47,6 @@ export default function Navbar({ navigation }: NavbarProps) {
                 <Text className="text-white font-medium">Librería</Text>
               </Pressable>
 
-              {/* Coworking Button */}
               <Pressable
                 onPress={() => navigation?.navigate('Coworking')}
                 className="flex-row items-center gap-1 rounded-full px-3 py-2 active:opacity-80"
@@ -59,10 +55,8 @@ export default function Navbar({ navigation }: NavbarProps) {
                 <Text className="text-white font-medium">Co-working</Text>
               </Pressable>
 
-              {/* Username */}
               <Text className="text-white text-sm font-medium">{user.username}</Text>
 
-              {/* Logout Button */}
               <Pressable
                 onPress={handleRequestLogout}
                 className="rounded-full p-2 active:opacity-80"
@@ -81,7 +75,6 @@ export default function Navbar({ navigation }: NavbarProps) {
         </View>
       </View>
 
-      {/* Logout Confirmation Modal */}
       {logoutModalOpen && (
         <View className="absolute inset-0 z-50 flex items-center justify-center bg-black/40">
           <View className="w-4/5 rounded-xl bg-white p-6">

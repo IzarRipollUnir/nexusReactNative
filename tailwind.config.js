@@ -5,9 +5,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        // Use the keys that match the names used in useFonts in App.tsx
         display: ['SpaceGrotesk'],
         body: ['Manrope'],
+      },
       },
     },
   },
