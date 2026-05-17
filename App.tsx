@@ -8,7 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthProvider } from './src/shared/contexts/AuthContext';
 import RootNavigator from './src/navigation/RootNavigator';
 
-export default function App() {
+export default function App(): React.ReactElement {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
