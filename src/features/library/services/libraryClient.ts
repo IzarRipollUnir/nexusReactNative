@@ -10,13 +10,33 @@ function normalizeBook(book: Book): Book {
   };
 }
 
+function extractBookList(payload: unknown): Book[] {
+  if (Array.isArray(payload)) {
+    return payload as Book[];
+  }
+
+  if (!payload || typeof payload !== 'object') {
+    return [];
+  }
+
+  const candidate =
+    (payload as { books?: Book[] }).books ??
+    (payload as { data?: Book[] }).data ??
+    (payload as { items?: Book[] }).items ??
+    (payload as { purchases?: Book[] }).purchases ??
+    (payload as { result?: Book[] }).result ??
+    (payload as { purchase?: Book[] }).purchase;
+
+  return Array.isArray(candidate) ? candidate : [];
+}
+
 export async function getBooks(): Promise<Book[]> {
-  const books = (await apiClient.get('/books')) as Book[];
+  const books = extractBookList(await apiClient.get('/books'));
   return books.map(normalizeBook);
 }
 
 export async function getBestSellers(): Promise<Book[]> {
-  const books = (await apiClient.get('/books/top')) as Book[];
+  const books = extractBookList(await apiClient.get('/books/top'));
   return books.map(normalizeBook);
 }
 
@@ -25,7 +45,7 @@ export async function getCategories(): Promise<Category[]> {
 }
 
 export async function getBookByCategory(id: string): Promise<Book[]> {
-  const books = (await apiClient.get(`/categories/${id}/books`)) as Book[];
+  const books = extractBookList(await apiClient.get(`/categories/${id}/books`));
   return books.map(normalizeBook);
 }
 
@@ -45,12 +65,12 @@ export async function getBooksWithFilters(filters?: BookFilters): Promise<Book[]
   if (filters?.ISBN) params.append('ISBN', filters.ISBN);
 
   const queryString = params.toString();
-  const books = (await apiClient.get(`/books${queryString ? `?${queryString}` : ''}`)) as Book[];
+  const books = extractBookList(await apiClient.get(`/books${queryString ? `?${queryString}` : ''}`));
   return books.map(normalizeBook);
 }
 
 export async function getHistoric(userId: string): Promise<Book[]> {
-  const books = (await apiClient.get(`/users/${userId}/purchase`)) as Book[];
+  const books = extractBookList(await apiClient.get(`/users/${userId}/purchase`));
   return books.map(normalizeBook);
 }
 

@@ -3,6 +3,7 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../../../shared/contexts/AuthContext';
+import Navbar from '../../../shared/components/Navbar';
 
 type ServiceCard = {
   title: string;
@@ -52,9 +53,15 @@ const services: ServiceCard[] = [
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
   const { user } = useAuth();
+  const username = user?.username ?? user?.email?.split('@')[0] ?? 'estudiante';
 
   const navigateTo = (route?: ServiceCard['route']) => {
     if (!route) {
+      return;
+    }
+
+    if (!user) {
+      navigation?.navigate('Login');
       return;
     }
 
@@ -62,13 +69,20 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top"]}>
-      <ScrollView className="flex-1 bg-white" contentContainerClassName="flex-grow px-4 pb-10 pt-4">
+    <>
+      {user && <Navbar navigation={navigation} />}
+      <SafeAreaView className="flex-1 bg-white" edges={[]}>
+        <ScrollView className="flex-1 bg-white" contentContainerClassName="flex-grow px-4 pb-10 pt-4">
         <View className="overflow-hidden rounded-3xl px-6 py-16" style={{ backgroundColor: '#667eea' }}>
 
           <Text className="text-center text-5xl font-bold leading-tight text-white">
             Bienvenido a NEXUS
           </Text>
+          {user && (
+            <Text className="mt-3 text-center text-lg font-medium text-white/90">
+              Hola, {username}
+            </Text>
+          )}
           <Text className="mt-4 text-center text-xl text-white/95">
             Tu plataforma universitaria integral
           </Text>
@@ -133,5 +147,6 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         </View>
       </ScrollView>
     </SafeAreaView>
+    </>
   );
 }

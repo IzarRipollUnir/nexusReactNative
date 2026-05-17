@@ -11,12 +11,21 @@ import { LibraryCartProvider } from '../features/library/contexts/LibraryCartCon
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
-  const { loading } = useAuth();
+  const { loading, user } = useAuth();
 
   if (loading) {
     return (
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Loading" component={LoadingScreen} />
+      </Stack.Navigator>
+    );
+  }
+
+  if (!user) {
+    return (
+      <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Main" component={HomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     );
   }
