@@ -17,14 +17,6 @@ export default function App(): React.ReactElement {
     'Manrope': require('./assets/fonts/Manrope-VariableFont_wght.ttf'),
   });
 
-  if (!fontsLoaded) {
-    return (
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <LoadingScreen />
-      </GestureHandlerRootView>
-    );
-  }
-
   React.useEffect(() => {
     try {
       const t = Text as any;
@@ -36,6 +28,14 @@ export default function App(): React.ReactElement {
     } catch (e) {
     }
   }, []);
+
+  if (!fontsLoaded) {
+    return (
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <LoadingScreen />
+      </GestureHandlerRootView>
+    );
+  }
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

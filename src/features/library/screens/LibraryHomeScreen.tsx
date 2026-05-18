@@ -5,6 +5,7 @@ import Navbar from '../../../shared/components/Navbar';
 import LibraryHeader from '../components/LibraryHeader';
 import { getBestSellers } from '../services/libraryClient';
 import type { Book } from '../types';
+import * as Haptics from 'expo-haptics';
 
 export default function LibraryHomeScreen({ navigation }: any) {
   const [bestSellers, setBestSellers] = useState<Book[]>([]);
@@ -60,7 +61,10 @@ export default function LibraryHomeScreen({ navigation }: any) {
               {bestSellers.map((book) => (
                 <Pressable
                   key={book.id}
-                  onPress={() => navigation.navigate('LibraryDetail', { id: book.id })}
+                  onPress={async () => {
+                    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                    navigation.navigate('LibraryDetail', { id: book.id });
+                  }}
                   className="mb-4 w-[48%] overflow-hidden rounded-2xl bg-white"
                   style={{ elevation: 2 }}
                 >

@@ -4,6 +4,7 @@ import { DrawerContentScrollView, DrawerContentComponentProps } from '@react-nav
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getCategories } from '../features/library/services/libraryClient';
 import type { Category } from '../features/library/types';
+import * as Haptics from 'expo-haptics';
 
 export default function LibraryDrawerContent(props: DrawerContentComponentProps) {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -42,7 +43,10 @@ export default function LibraryDrawerContent(props: DrawerContentComponentProps)
             {categories.map((category) => (
               <Pressable
                 key={category.id}
-                onPress={() => props.navigation.navigate('LibraryCategory', { id: category.id, name: category.name })}
+                onPress={async () => {
+                  await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  props.navigation.navigate('LibraryCategory', { id: category.id, name: category.name });
+                }}
                 className="mb-2 rounded-xl bg-slate-100 px-4 py-3 active:opacity-80"
               >
                 <Text className="text-base text-slate-900">{category.name}</Text>

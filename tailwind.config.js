@@ -8,7 +8,6 @@ module.exports = {
         display: ['SpaceGrotesk'],
         body: ['Manrope'],
       },
-      },
     },
   },
   plugins: [],
