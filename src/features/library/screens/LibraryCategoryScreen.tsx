@@ -5,7 +5,7 @@ import Navbar from '../../../shared/components/Navbar';
 import LibraryHeader from '../components/LibraryHeader';
 import { getBookByCategory, getBooksWithFilters } from '../services/libraryClient';
 import type { Book } from '../types';
-
+import * as Haptics from 'expo-haptics';
 type Props = {
   route: { params?: { id?: number; name?: string } };
   navigation: any;
@@ -128,10 +128,16 @@ export default function LibraryCategoryScreen({ route, navigation }: Props) {
               />
             </View>
             <View className="mt-4 flex-row gap-3">
-              <Pressable onPress={handleApplyFilters} className="flex-1 rounded-xl bg-slate-950 px-4 py-3 active:opacity-90">
+              <Pressable onPress={async () => {
+                await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                await handleApplyFilters();
+              }} className="flex-1 rounded-xl bg-slate-950 px-4 py-3 active:opacity-90">
                 <Text className="text-center text-base font-semibold text-white">Aplicar filtros</Text>
               </Pressable>
-              <Pressable onPress={handleResetFilters} className="rounded-xl border border-slate-200 bg-white px-4 py-3 active:opacity-90">
+              <Pressable onPress={async () => {
+                await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                await handleResetFilters();
+              }} className="rounded-xl border border-slate-200 bg-white px-4 py-3 active:opacity-90">
                 <Text className="text-center text-base font-semibold text-slate-950">Limpiar</Text>
               </Pressable>
             </View>
@@ -151,7 +157,10 @@ export default function LibraryCategoryScreen({ route, navigation }: Props) {
               {books.map((book) => (
                 <Pressable
                   key={book.id}
-                  onPress={() => navigation.navigate('LibraryDetail', { id: book.id })}
+                  onPress={async() => {
+                    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                    navigation.navigate('LibraryDetail', { id: book.id });
+                  }}
                   className="mb-4 w-[48%] overflow-hidden rounded-2xl bg-white"
                   style={{ elevation: 2 }}
                 >

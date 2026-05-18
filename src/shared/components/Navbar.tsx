@@ -3,7 +3,7 @@ import { View, Text, Pressable, Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../contexts/AuthContext';
-
+import * as Haptics from 'expo-haptics';
 type NavbarProps = {
   navigation?: {
     navigate: (route: 'Main' | 'Library' | 'Coworking' | 'Login' | string) => void;
@@ -32,7 +32,10 @@ export default function Navbar({ navigation }: NavbarProps) {
   return (
     <SafeAreaView className="bg-blue-600" edges={['top']}>
       <View className="flex-row items-center justify-between px-4 py-4">
-        <Pressable onPress={() => navigation?.navigate('Main')}>
+        <Pressable onPress={async () => {
+          await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+          navigation?.navigate('Main');
+        }}>
           <Text className="text-2xl font-bold text-white">NEXUS</Text>
         </Pressable>
 
@@ -40,7 +43,10 @@ export default function Navbar({ navigation }: NavbarProps) {
           {user ? (
             <>
               <Pressable
-                onPress={() => navigation?.navigate('Library')}
+                onPress={async () => {
+                  await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  navigation?.navigate('Library');
+                }}
                 className="flex-row items-center gap-1 rounded-full px-3 py-2 active:opacity-80"
               >
                 <MaterialCommunityIcons name="book-outline" size={20} color="white" />
@@ -48,7 +54,10 @@ export default function Navbar({ navigation }: NavbarProps) {
               </Pressable>
 
               <Pressable
-                onPress={() => navigation?.navigate('Coworking')}
+                onPress={async () => {
+                  await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  navigation?.navigate('Coworking');
+                }}
                 className="flex-row items-center gap-1 rounded-full px-3 py-2 active:opacity-80"
               >
                 <MaterialCommunityIcons name="briefcase-outline" size={20} color="white" />
@@ -58,7 +67,10 @@ export default function Navbar({ navigation }: NavbarProps) {
               <Text className="text-white text-sm font-medium">{user.username}</Text>
 
               <Pressable
-                onPress={handleRequestLogout}
+                onPress={async () => {
+                  await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  handleRequestLogout();
+                }}
                 className="rounded-full p-2 active:opacity-80"
               >
                 <MaterialCommunityIcons name="logout" size={20} color="white" />
@@ -66,7 +78,10 @@ export default function Navbar({ navigation }: NavbarProps) {
             </>
           ) : (
             <Pressable
-              onPress={() => navigation?.navigate('Login')}
+              onPress={async () => {
+                await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                navigation?.navigate('Login');
+              }}
               className="rounded-full px-3 py-2 active:opacity-80"
             >
               <Text className="text-white font-medium">Login</Text>
@@ -82,13 +97,19 @@ export default function Navbar({ navigation }: NavbarProps) {
             <Text className="mt-2 text-gray-600">¿Estás seguro de que deseas cerrar sesión?</Text>
             <View className="mt-6 flex-row justify-end gap-3">
               <Pressable
-                onPress={handleCloseLogoutModal}
+                onPress={async () => {
+                  await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  handleCloseLogoutModal();
+                }}
                 className="rounded-lg px-4 py-2 active:opacity-80"
               >
                 <Text className="text-gray-800 font-medium">Cancelar</Text>
               </Pressable>
               <Pressable
-                onPress={handleConfirmLogout}
+                onPress={async () => {
+                  await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  handleConfirmLogout();
+                }}
                 className="rounded-lg bg-red-600 px-4 py-2 active:opacity-90"
               >
                 <Text className="text-white font-bold">Cerrar sesión</Text>
