@@ -41,7 +41,7 @@ export default function RootNavigator() {
           </LibraryCartProvider>
         )}
       />
-      <Stack.Screen name="Coworking" component={CoworkingStack} />
+      <Stack.Screen name="Coworking" component={CoworkingStack} options={{ headerShown: false }} />
       <Stack.Screen name="Login" component={LoginScreen} />
     </Stack.Navigator>
   );

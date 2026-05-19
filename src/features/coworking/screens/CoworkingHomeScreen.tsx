@@ -125,8 +125,9 @@ export default function CoworkingHomeScreen({ navigation }: any) {
 
   return (
     <>
-      <Navbar navigation={navigation} />
+      
       <SafeAreaView className="flex-1 bg-slate-50" edges={['bottom']}>
+        <Navbar navigation={navigation} />
         <ScrollView className="flex-1 px-4 pt-4" contentContainerClassName="pb-10">
           <Text className="text-3xl font-semibold text-slate-950">Espacios de Co-working</Text>
           <Text className="mt-2 text-base text-slate-600">Reserva tu espacio de trabajo colaborativo</Text>
