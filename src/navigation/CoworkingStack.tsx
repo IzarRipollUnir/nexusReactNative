@@ -7,7 +7,7 @@ const Stack = createNativeStackNavigator();
 export default function CoworkingStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="CoworkingHome" component={CoworkingHomeScreen} options={{ title: 'Coworking' }} />
+      <Stack.Screen name="CoworkingHome" component={CoworkingHomeScreen} options={{ title: 'Coworking', headerShown: false }} />
     </Stack.Navigator>
   );
 }

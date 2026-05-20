@@ -7,6 +7,7 @@ import LibraryHeader from '../components/LibraryHeader';
 import { getBookDetail } from '../services/libraryClient';
 import type { Book } from '../types';
 import { useLibraryCart } from '../contexts/LibraryCartContext';
+import * as Haptics from 'expo-haptics';
 
 export default function LibraryDetailScreen({ route, navigation }: any) {
   const { id } = route.params || {};
@@ -75,7 +76,10 @@ export default function LibraryDetailScreen({ route, navigation }: any) {
               <Text className="mt-1 text-sm text-red-600">{error ?? 'Inténtalo de nuevo más tarde.'}</Text>
             </View>
             <Pressable
-              onPress={() => navigation.goBack()}
+              onPress={async () => {
+                await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                navigation.goBack();
+              }}
               className="mt-4 flex-row items-center self-start rounded-xl bg-slate-950 px-4 py-3 active:opacity-90"
             >
               <MaterialCommunityIcons name="arrow-left" size={18} color="white" />
@@ -95,7 +99,10 @@ export default function LibraryDetailScreen({ route, navigation }: any) {
         <LibraryHeader title="Detalle del libro" navigation={navigation} />
 
           <Pressable
-            onPress={() => navigation.goBack()}
+            onPress={async () => {
+              await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              navigation.goBack();
+            }}
             className="mb-4 flex-row items-center self-start rounded-xl bg-slate-100 px-4 py-3 active:opacity-90"
           >
             <MaterialCommunityIcons name="arrow-left" size={18} color="#0f172a" />
@@ -126,7 +133,10 @@ export default function LibraryDetailScreen({ route, navigation }: any) {
               <Text className="mt-2 leading-6 text-slate-600">{book.description}</Text>
 
               <Pressable
-                onPress={handleAddToCart}
+                onPress={async () => {
+                  await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  await handleAddToCart();
+                }}
                 disabled={hasItem(book.id)}
                 className={`mt-6 flex-row items-center justify-center rounded-2xl px-5 py-4 ${hasItem(book.id) ? 'bg-emerald-600' : 'bg-slate-950'}`}
                 style={{ opacity: hasItem(book.id) ? 0.9 : 1 }}

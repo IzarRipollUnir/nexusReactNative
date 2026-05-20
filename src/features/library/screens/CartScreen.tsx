@@ -7,6 +7,7 @@ import LibraryHeader from '../components/LibraryHeader';
 import { purchaseBooks } from '../services/libraryClient';
 import { useAuth } from '../../../shared/contexts/AuthContext';
 import { useLibraryCart } from '../contexts/LibraryCartContext';
+import * as Haptics from 'expo-haptics';
 
 export default function CartScreen({ navigation }: any) {
   const { user } = useAuth();
@@ -63,7 +64,10 @@ export default function CartScreen({ navigation }: any) {
                 Añade libros desde el detalle para continuar con la compra.
               </Text>
               <Pressable
-                onPress={() => navigation.navigate('LibraryHome')}
+                onPress={async () => {
+                  await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  navigation.navigate('LibraryHome');
+                }}
                 className="mt-6 rounded-xl bg-slate-950 px-5 py-3 active:opacity-90"
               >
                 <Text className="text-base font-semibold text-white">Ir a la librería</Text>
@@ -84,7 +88,10 @@ export default function CartScreen({ navigation }: any) {
                       </Text>
                       <Text className="mt-2 text-lg font-bold text-blue-600">€{book.price.toFixed(2)}</Text>
                       <Pressable
-                        onPress={() => removeItem(book.id)}
+                        onPress={async () => {
+                          await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                          removeItem(book.id);
+                        }}
                         className="mt-3 self-start rounded-lg bg-red-50 px-3 py-2 active:opacity-90"
                       >
                         <Text className="text-sm font-semibold text-red-700">Eliminar</Text>
@@ -98,7 +105,10 @@ export default function CartScreen({ navigation }: any) {
                 <Text className="text-base text-slate-300">Total</Text>
                 <Text className="mt-1 text-4xl font-bold text-white">€{totalPrice.toFixed(2)}</Text>
                 <Pressable
-                  onPress={handlePurchase}
+                  onPress={async () => {
+                    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                    handlePurchase();
+                  }}
                   disabled={processing}
                   className="mt-5 items-center rounded-2xl bg-white px-5 py-4 active:opacity-90"
                   style={{ opacity: processing ? 0.8 : 1 }}

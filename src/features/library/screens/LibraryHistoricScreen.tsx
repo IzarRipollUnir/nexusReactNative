@@ -9,6 +9,8 @@ import { getHistoric } from '../services/libraryClient';
 import { useAuth } from '../../../shared/contexts/AuthContext';
 import type { Book } from '../types';
 
+import * as Haptics from 'expo-haptics';
+
 export default function LibraryHistoricScreen({ navigation }: any) {
   const { user } = useAuth();
   const [books, setBooks] = useState<Book[]>([]);
@@ -64,7 +66,10 @@ export default function LibraryHistoricScreen({ navigation }: any) {
               {books.map((book) => (
                 <Pressable
                   key={book.id}
-                  onPress={() => navigation.navigate('LibraryDetail', { id: book.id })}
+                  onPress={async () => {
+                    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                    navigation.navigate('LibraryDetail', { id: book.id });
+                  }}
                   className="mb-4 w-[48%] overflow-hidden rounded-2xl bg-white"
                   style={{ elevation: 2 }}
                 >

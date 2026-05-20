@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../../../shared/contexts/AuthContext';
 import Navbar from '../../../shared/components/Navbar';
-
+import * as Haptics from 'expo-haptics';
 type ServiceCard = {
   title: string;
   description: string;
@@ -88,7 +88,10 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           </Text>
           {!user && (
             <Pressable
-              onPress={() => navigation?.navigate('Login')}
+              onPress={async () => {
+                await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                navigation?.navigate('Login');
+              }}
               className="mt-6 self-center rounded-xl bg-white px-6 py-3 active:opacity-90"
               style={{ elevation: 2, shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 10, shadowOffset: { width: 0, height: 4 } }}
             >
@@ -111,7 +114,11 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
             return (
               <Pressable
                 key={service.title}
-                onPress={() => navigateTo(service.route)}
+                onPress={async (event) => {
+                  event.stopPropagation();
+                  await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  navigateTo(service.route);
+                }}
                 disabled={!enabled}
                 className="mb-4 w-[48%] rounded-xl border border-slate-200 bg-white p-5 active:scale-[0.98]"
                 style={{
