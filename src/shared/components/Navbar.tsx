@@ -40,16 +40,22 @@ export default function Navbar({ navigation }: NavbarProps) {
           {user ? (
             <>
               <Pressable
-                onPress={() => navigation?.navigate('Library')}
-                className="flex-row items-center gap-1 rounded-full px-3 py-2 active:opacity-80"
+                onPress={async () => {
+                  await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  navigation?.navigate('Library');
+                }}
+                className="flex-row items-center rounded-full bg-white/15 px-4 py-2"
               >
                 <MaterialCommunityIcons name="book-outline" size={20} color="white" />
                 <Text className="text-white font-medium">Librería</Text>
               </Pressable>
 
               <Pressable
-                onPress={() => navigation?.navigate('Coworking')}
-                className="flex-row items-center gap-1 rounded-full px-3 py-2 active:opacity-80"
+                onPress={async () => {
+                  await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  navigation?.navigate('Coworking');
+                }}
+                className="flex-row items-center rounded-full bg-white/15 px-4 py-2"
               >
                 <MaterialCommunityIcons name="briefcase-outline" size={20} color="white" />
                 <Text className="text-white font-medium">Co-working</Text>
@@ -66,8 +72,11 @@ export default function Navbar({ navigation }: NavbarProps) {
             </>
           ) : (
             <Pressable
-              onPress={() => navigation?.navigate('Login')}
-              className="rounded-full px-3 py-2 active:opacity-80"
+              onPress={async () => {
+                await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                navigation?.navigate('Login');
+              }}
+              className="rounded-full bg-white/15 px-4 py-2"
             >
               <Text className="text-white font-medium">Login</Text>
             </Pressable>
@@ -82,14 +91,20 @@ export default function Navbar({ navigation }: NavbarProps) {
             <Text className="mt-2 text-gray-600">¿Estás seguro de que deseas cerrar sesión?</Text>
             <View className="mt-6 flex-row justify-end gap-3">
               <Pressable
-                onPress={handleCloseLogoutModal}
-                className="rounded-lg px-4 py-2 active:opacity-80"
+                onPress={async () => {
+                  await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  setLogoutModalOpen(false);
+                }}
+                className="px-4 py-2"
               >
                 <Text className="text-gray-800 font-medium">Cancelar</Text>
               </Pressable>
               <Pressable
-                onPress={handleConfirmLogout}
-                className="rounded-lg bg-red-600 px-4 py-2 active:opacity-90"
+                onPress={ async () => {
+                  await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  await handleConfirmLogout();
+                }}
+                className="rounded-lg bg-red-600 px-4 py-2"
               >
                 <Text className="text-white font-bold">Cerrar sesión</Text>
               </Pressable>
