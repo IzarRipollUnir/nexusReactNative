@@ -69,10 +69,9 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
   };
 
   return (
-    <>
-      {user && <Navbar navigation={navigation} />}
-      <SafeAreaView className="flex-1 bg-white" edges={[]}>
-        <ScrollView className="flex-1 bg-white" contentContainerClassName="flex-grow px-4 pb-10 pt-4">
+    <SafeAreaView className="flex-1 bg-white" edges={[ 'bottom' ]}>
+      <Navbar navigation={navigation} />
+      <ScrollView className="flex-1 bg-white" contentContainerClassName="flex-grow px-4 pb-10 pt-4">
         <View className="overflow-hidden rounded-3xl px-6 py-16" style={{ backgroundColor: '#667eea' }}>
 
           <Text className="text-center text-5xl font-bold leading-tight text-white">
@@ -154,6 +153,5 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         </View>
       </ScrollView>
     </SafeAreaView>
-    </>
   );
 }
