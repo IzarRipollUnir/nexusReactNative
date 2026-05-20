@@ -3,7 +3,7 @@ import { View, Text, Pressable, Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../contexts/AuthContext';
-
+import * as Haptics from 'expo-haptics';
 type NavbarProps = {
   navigation?: {
     navigate: (route: 'Main' | 'Library' | 'Coworking' | 'Login' | string) => void;
